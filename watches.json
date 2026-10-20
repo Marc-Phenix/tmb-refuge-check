@@ -1,0 +1,54 @@
+{
+  "interval_minutes": 15,
+  "watches": [
+    {
+      "id": "b69d5d415e2e43fbb1a096cf2316dba0",
+      "slug": "refuge-des-mottets",
+      "name": "Refuge des Mottets",
+      "date": "2027-07-12",
+      "min_beds": 1
+    },
+    {
+      "id": "dd841b6256214582a77a23c3d2a1461a",
+      "slug": "les-chambres-du-soleil",
+      "name": "Les Chambres du Soleil",
+      "date": "2027-07-12",
+      "min_beds": 1
+    },
+    {
+      "id": "8a11e5afff6f48c59d6c2d83fe1e2527",
+      "slug": "auberge-refuge-de-la-nova",
+      "name": "Auberge-Refuge de la Nova",
+      "date": "2027-07-12",
+      "min_beds": 1
+    },
+    {
+      "id": "f45b5ded82a74d1aa5a45888e3866dcd",
+      "slug": "auberge-la-grande-ourse",
+      "name": "Auberge la Grande Ourse",
+      "date": "2027-07-17",
+      "min_beds": 1
+    },
+    {
+      "id": "29752fe5daed4cf39d117b291f989517",
+      "slug": "auberge-mont-blanc",
+      "name": "Auberge Mont-Blanc",
+      "date": "2027-07-17",
+      "min_beds": 1
+    },
+    {
+      "id": "8f3ff151240c40f1aec0cf88ab1ff55f",
+      "slug": "refuge-le-peuty",
+      "name": "Refuge Le Peuty",
+      "date": "2027-07-17",
+      "min_beds": 1
+    },
+    {
+      "id": "b53aa686b931498ba3c7a0d52be48040",
+      "slug": "hotel-du-col-de-la-forclaz",
+      "name": "Hôtel du Col de la Forclaz",
+      "date": "2027-07-17",
+      "min_beds": 1
+    }
+  ]
+}
