@@ -95,17 +95,32 @@ def send_email(settings: MailSettings, subject: str, body: str) -> None:
     message["From"] = settings.sender
     message["To"] = ", ".join(settings.recipients)
     message.set_content(body)
-    if settings.port == 465:
-        with smtplib.SMTP_SSL(settings.host, settings.port, timeout=30) as smtp:
-            smtp.login(settings.user, settings.password)
+    try:
+        if settings.port == 465:
+            with smtplib.SMTP_SSL(settings.host, settings.port, timeout=30, local_hostname="localhost") as smtp:
+                _login(smtp, settings)
+                smtp.send_message(message)
+            return
+        with smtplib.SMTP(settings.host, settings.port, timeout=30, local_hostname="localhost") as smtp:
+            smtp.ehlo("localhost")
+            smtp.starttls()
+            smtp.ehlo("localhost")
+            _login(smtp, settings)
             smtp.send_message(message)
-        return
-    with smtplib.SMTP(settings.host, settings.port, timeout=30) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login(settings.user, settings.password)
-        smtp.send_message(message)
+    except smtplib.SMTPAuthenticationError as exc:
+        raise RuntimeError("Gmail did not accept the mailbox address or app password.") from exc
+    except smtplib.SMTPServerDisconnected as exc:
+        raise RuntimeError(
+            "Gmail closed the connection during login. Check the mailbox address and app password."
+        ) from exc
+
+
+def _login(smtp: smtplib.SMTP, settings: MailSettings) -> None:
+    # One method so a rejected password stays a clear auth error. Gmail
+    # hangs up if the client tries a second method after the first failure.
+    if "auth" in smtp.esmtp_features:
+        smtp.esmtp_features["auth"] = "PLAIN"
+    smtp.login(settings.user, settings.password)
 
 
 def open_flags(state: dict) -> dict:
