@@ -2,8 +2,8 @@ name: tmb_refuge_alert
 
 on:
   schedule:
-    # 7 and 37 minutes past the hour. GitHub often drops jobs scheduled at :00 and :30.
-    - cron: "7,37 * * * *"
+    # Every 10 minutes, offset from :00 and :30 because GitHub often drops those.
+    - cron: "3,13,23,33,43,53 * * * *"
   workflow_dispatch:
     inputs:
       send_test:
