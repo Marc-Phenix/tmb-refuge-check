@@ -1,14 +1,10 @@
-name: tmb_refuge_alert
+name: tmb_refuge_alert_manual
 
 on:
-  schedule:
-    # Every 10 minutes, offset from :00 and :30 because GitHub often drops those.
-    - cron: "8,18,28,38,48,58 * * * *"
-      timezone: America/New_York
   workflow_dispatch:
     inputs:
       send_test:
-        description: Send a test email
+        description: Send test email and Discord alerts
         type: boolean
         default: false
 
@@ -27,7 +23,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check refuges and send email
+      - name: Check refuges and send alerts
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -35,6 +31,7 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           ALERT_FROM: ${{ secrets.ALERT_FROM }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TMB_SEND_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.send_test && '1' || '0' }}
         run: python send_alerts.py
 
