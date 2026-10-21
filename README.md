@@ -19,7 +19,7 @@ Your watches are saved in `watches.json` in this folder.
 
 ## Email while the PC is off
 
-GitHub runs the same check every 10 minutes. A new row appears on the Actions page around 3, 13, 23, 33, 43, and 53 minutes past each hour. The job reads the `watches.json` committed on `main`. When a watched date newly has enough beds, it sends one email. A date that stays open does not send again. If it fills and later opens again, that sends a new email. The first run also emails any date that is already open.
+GitHub's own timer has not been starting runs on this repository. A Windows scheduled task named `tmb_refuge_alert` starts the check every 10 minutes instead. The PC has to be on. No window opens. A new row then appears on the Actions page. The job reads the `watches.json` committed on `main`. When a watched date newly has enough beds, it sends one email. A date that stays open does not send again. If it fills and later opens again, that sends a new email. The first run also emails any date that is already open.
 
 In the repo on GitHub, open **Settings → Secrets and variables → Actions** and add:
 
