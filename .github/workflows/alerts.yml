@@ -2,7 +2,8 @@ name: tmb_refuge_alert
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # 7 and 37 minutes past the hour. GitHub often drops jobs scheduled at :00 and :30.
+    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       send_test:
@@ -37,7 +38,7 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           ALERT_FROM: ${{ secrets.ALERT_FROM }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
-          TMB_SEND_TEST: ${{ inputs.send_test && '1' || '0' }}
+          TMB_SEND_TEST: ${{ github.event_name == 'workflow_dispatch' && inputs.send_test && '1' || '0' }}
         run: python send_alerts.py
 
       - name: Save alert state
