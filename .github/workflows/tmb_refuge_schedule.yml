@@ -2,8 +2,8 @@ name: tmb_refuge_alert
 
 on:
   schedule:
-    # Every 10 minutes, away from the start of the hour.
-    - cron: "8,18,28,38,48,58 * * * *"
+    # Once per hour, away from the busy start of the hour.
+    - cron: "17 * * * *"
 
 permissions:
   contents: write
