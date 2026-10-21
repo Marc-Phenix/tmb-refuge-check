@@ -11,10 +11,6 @@ on:
         type: boolean
         default: false
 
-concurrency:
-  group: tmb-alerts
-  cancel-in-progress: false
-
 permissions:
   contents: write
 
