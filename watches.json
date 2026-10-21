@@ -1,5 +1,5 @@
 {
-  "interval_minutes": 15,
+  "interval_minutes": 10,
   "watches": [
     {
       "id": "b69d5d415e2e43fbb1a096cf2316dba0",

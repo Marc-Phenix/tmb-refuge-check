@@ -16,3 +16,20 @@ pythonw app.py
 Leave the window open. You can minimize it. Checks stop when you close it. Turn on **Start when I sign in to Windows** if you want it to launch at login.
 
 Your watches are saved in `watches.json` in this folder.
+
+## Email while the PC is off
+
+GitHub can run the same check about every 30 minutes. The job reads the `watches.json` committed on `main`. When a watched date newly has enough beds, it sends one email. A date that stays open does not send again. If it fills and later opens again, that sends a new email. The first run also emails any date that is already open.
+
+In the repo on GitHub, open **Settings → Secrets and variables → Actions** and add:
+
+| Name | Value |
+| --- | --- |
+| `SMTP_HOST` | `smtp.gmail.com` for Gmail, or `smtp.office365.com` for Outlook |
+| `SMTP_PORT` | `587` |
+| `SMTP_USER` | the mailbox address |
+| `SMTP_PASSWORD` | an app password, not the normal mailbox password |
+| `ALERT_FROM` | the same mailbox address |
+| `ALERT_TO` | who should receive the alert; separate several addresses with commas |
+
+Gmail creates the app password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords). Commit and push `watches.json` to `main` before the schedule can see those watches. **Actions → Refuge email alerts → Run workflow** sends a check without waiting for the next half hour.

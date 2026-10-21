@@ -1,0 +1,51 @@
+name: Refuge email alerts
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: tmb-alerts
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check refuges and send email
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+        run: python send_alerts.py
+
+      - name: Save alert state
+        run: |
+          if [ ! -f alert-state.json ]; then
+            echo "No alert state to save."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add alert-state.json
+          if git diff --cached --quiet; then
+            echo "Alert state unchanged."
+            exit 0
+          fi
+          git commit -m "Update refuge alert state"
+          git push origin HEAD:main
