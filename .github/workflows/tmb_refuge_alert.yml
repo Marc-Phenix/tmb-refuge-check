@@ -4,6 +4,7 @@ on:
   schedule:
     # Every 10 minutes, offset from :00 and :30 because GitHub often drops those.
     - cron: "3,13,23,33,43,53 * * * *"
+      timezone: America/New_York
   workflow_dispatch:
     inputs:
       send_test:
