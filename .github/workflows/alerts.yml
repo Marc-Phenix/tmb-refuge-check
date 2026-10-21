@@ -1,4 +1,4 @@
-name: Refuge email alerts
+name: tmb_refuge_alert
 
 on:
   schedule:

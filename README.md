@@ -32,4 +32,4 @@ In the repo on GitHub, open **Settings → Secrets and variables → Actions** a
 | `ALERT_FROM` | the same mailbox address |
 | `ALERT_TO` | who should receive the alert; separate several addresses with commas |
 
-Gmail creates the app password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords). Commit and push `watches.json` to `main` before the schedule can see those watches. **Actions → Refuge email alerts → Run workflow** sends a check without waiting for the next half hour. Turn on **Send a test email** to confirm the mailbox before a refuge opens.
+Gmail creates the app password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords). Commit and push `watches.json` to `main` before the schedule can see those watches. **Actions → tmb_refuge_alert → Run workflow** sends a check without waiting for the next half hour. Turn on **Send a test email** to confirm the mailbox before a refuge opens.
