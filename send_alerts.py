@@ -162,9 +162,21 @@ def _one_line(value: str) -> str:
     return " ".join(value.split())
 
 
+def send_test() -> None:
+    send_email(
+        load_mail_settings(),
+        "TMB refuge alerts are on",
+        "This mailbox will get a message when a watched refuge date newly has enough free beds.\n\n"
+        "This check does not log in or book.",
+    )
+    print("Sent a test email.")
+
+
 def main() -> None:
     root = Path(__file__).resolve().parent
     try:
+        if os.environ.get("TMB_SEND_TEST", "").strip().lower() in {"1", "true"}:
+            send_test()
         run(root / "watches.json", root / "alert-state.json")
     except Exception as exc:
         print(f"Alert check failed: {exc}", file=sys.stderr)

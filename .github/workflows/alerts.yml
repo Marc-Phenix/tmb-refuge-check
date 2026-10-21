@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
+    inputs:
+      send_test:
+        description: Send a test email
+        type: boolean
+        default: false
 
 concurrency:
   group: tmb-alerts
@@ -32,6 +37,7 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           ALERT_FROM: ${{ secrets.ALERT_FROM }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
+          TMB_SEND_TEST: ${{ inputs.send_test && '1' || '0' }}
         run: python send_alerts.py
 
       - name: Save alert state
